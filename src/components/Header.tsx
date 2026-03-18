@@ -4,7 +4,7 @@ export default function Header() {
     <header className="flex fixed top-0 left-0 w-full z-50 bg-white/80 py-3 pt-5">
       <Link href="/" className="font-bold text-lg">
         <img
-        src="00.CompanyLogo.svg"
+        src="00.companyLogo.svg"
         alt="Logo Image"
         className="h-fit w-fit mr-10 pl-10"
         />
