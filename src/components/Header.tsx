@@ -1,29 +1,30 @@
-import Link from "next/link"
-
+import Link from "next/link";
 export default function Header() {
   return (
-    <header className="h-16 border-b flex items-center gap-10 px-8 sticky top-0 z-50 bg-white">
-
+    <header className="flex fixed top-0 left-0 w-full z-50 bg-white/80 py-3 pt-5">
       <Link href="/" className="font-bold text-lg">
-        DDingodng
+        <img
+        src="00.CompanyLogo.svg"
+        alt="Logo Image"
+        className="h-fit w-fit mr-10 pl-10"
+        />
       </Link>
 
-      <nav className="flex gap-6 text-sm">
-
+      <nav className="flex gap-6 text-sm text-center items-center justify-center">
+        
         <Link href="/about">About us</Link>
 
         <Link href="/organization">조직도</Link>
 
         <Link href="/download">다운로드</Link>
 
-        <Link
-          href="/join"
-        >
-          입점 신청
-        </Link>
+        <Link href="/join">입점 신청</Link>
+      </nav>
 
+      <nav>
+        
       </nav>
 
     </header>
-  )
+  );
 }
