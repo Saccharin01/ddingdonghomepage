@@ -1,6 +1,13 @@
 import Image from "next/image";
 
-function Card({ img, title, desc }: any) {
+type CardProps = {
+  img: string;
+  title: string;
+  desc: string;
+};
+
+
+function Card({ img, title, desc }: CardProps) {
   return (
     <div className="text-left">
 

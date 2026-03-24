@@ -29,7 +29,7 @@ export default function Header() {
 
         <Link
           href="/test"
-          className="mr-4 px-8 py-3 rounded-full bg-[#F43465] text-white font-semibold hover:bg-pink-600 active:bg-pink-700
+          className="mr-20 px-8 py-3 rounded-full bg-[#F43465] text-white font-semibold hover:bg-pink-600 active:bg-pink-700
           focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2 transition">
           사장님 POS
         </Link>
