@@ -1,34 +1,36 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Section1() {
   return (
-    <section className="relative w-full min-h-screen">
+    <section className="relative w-full min-h-screen overflow-hidden">
 
-      {/* 배경 */}
-      <Image
-        src="/01.Page.png"
-        alt="hero"
-        fill
-        priority
-        className="object-cover"
-      />
+      {/* 배경 레이어 */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/01.Page.png"
+          alt="bg"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
 
-      {/* overlay */}
-      <div className="absolute inset-0 bg-black/30" />
+        {/* 컨텐츠 영역만 밀기 */}
+        <div className="
+          pt-(--header-height)
+          max-w-7xl
+          fhd:max-w-[1600px]
+          mx-auto
+          px-6 md:px-20 fhd:px-32
+          h-full
+          grid md:grid-cols-2
+          items-center
+        ">
 
-      {/* 레이아웃 */}
-      <div className="
-        relative z-10
-        max-w-7xl mx-auto
-        px-6 md:px-20
-        h-full
-        grid md:grid-cols-2
-        items-center
-      ">
-
-        {/* 왼쪽 텍스트 */}
-        <div className="mt-70 max-w-md text-white">
-          <h1 className="text-3xl md:text-7xl font-bold leading-tight">
+        {/* LEFT */}
+        <div className="max-w-md text-white fhd: mt-40">
+          <h1 className="text-4xl md:text-5xl mt-20 fhd:text-7xl font-bold leading-tight">
             배달앱,
             <br />
             수수료 때문에
@@ -36,17 +38,32 @@ export default function Section1() {
             고민하셨나요?
           </h1>
 
-          <p className="mt-4 text-lg md:text-4xl text-[#F43465] font-semibold">
+          <p className="mt-15 text-lg md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
             띵동이 해결해 드립니다!
           </p>
 
-          <div className="flex gap-3 mt-6">
-            <Image src="/01.appStore.svg" alt="" width={120} height={40} />
-            <Image src="/01.google.svg" alt="" width={120} height={40} />
+          <div className="flex gap-5 mt-10 items-center">
+
+            <Link href="https://apps.apple.com/...">
+              <img
+                src="/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg"
+                alt="App Store"
+                className="h-16 w-auto"
+              />
+            </Link>
+
+            <Link href="https://play.google.com/...">
+              <img
+                src="/GetItOnGooglePlay_Badge_Web_color_English.svg"
+                alt="Google Play"
+                className="h-15 w-auto"
+              />
+            </Link>
+
           </div>
         </div>
 
-        {/* 오른쪽 비움 (이미지 공간) */}
+        {/* RIGHT (비워두거나 추후 콘텐츠) */}
         <div />
       </div>
     </section>

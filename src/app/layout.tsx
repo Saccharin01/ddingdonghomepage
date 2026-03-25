@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <main className="flex-1">
+        <main>
           {children}
         </main>
       </body>

@@ -14,7 +14,7 @@ export default function Section4() {
 
       {/* 레이아웃 */}
       <div className="
-        relative z-10
+        relative
         max-w-7xl mx-auto
         px-6 md:px-20
         h-full
