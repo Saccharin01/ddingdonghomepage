@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SectionContainer from "../SectionContainer";
 
 export default function Section2() {
   return (
@@ -15,18 +16,17 @@ export default function Section2() {
       </div>
 
       {/* 컨테이너 */}
-      <div className="
-        max-w-7xl
-        fhd:max-w-[1600px]
-        mx-auto
-        px-6 md:px-20 fhd:px-32
-        h-full
-        grid md:grid-cols-2
-        items-center
-      ">
+        <SectionContainer
+          className="
+            h-full
+            grid
+            md:grid-cols-2
+            items-center
+          "
+        >
 
         {/* LEFT */}
-        <div className="max-w-md mt-60 text-white space-y-6 md:max-w-lg lg:max-w-xl">
+        <div className="max-w-md mt-70 text-white space-y-6 md:max-w-lg lg:max-w-xl">
 
           <h2 className="text-3xl md:text-5xl fhd:text-7xl font-bold leading-tight">
             배달 음식이 비싸진 이유,
@@ -55,7 +55,7 @@ export default function Section2() {
         {/* RIGHT */}
         <div />
 
-      </div>
+      </SectionContainer>
     </section>
   );
 }

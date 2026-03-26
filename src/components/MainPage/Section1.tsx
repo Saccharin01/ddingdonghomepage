@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SectionContainer from "../SectionContainer";
 
 export default function Section1() {
   return (
@@ -17,16 +18,15 @@ export default function Section1() {
       </div>
 
         {/* 컨텐츠 영역만 밀기 */}
-        <div className="
-          pt-(--header-height)
-          max-w-7xl
-          fhd:max-w-[1600px]
-          mx-auto
-          px-6 md:px-20 fhd:px-32
-          h-full
-          grid md:grid-cols-2
-          items-center
-        ">
+        <SectionContainer
+          className="
+            pt-[var(--header-height)]
+            h-full
+            grid
+            md:grid-cols-2
+            items-center
+          "
+        >
 
         {/* LEFT */}
         <div className="max-w-md text-white fhd: mt-40">
@@ -38,7 +38,7 @@ export default function Section1() {
             고민하셨나요?
           </h1>
 
-          <p className="mt-15 text-lg md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
+          <p className="mt-15 text-2xl md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
             띵동이 해결해 드립니다!
           </p>
 
@@ -65,7 +65,7 @@ export default function Section1() {
 
         {/* RIGHT (비워두거나 추후 콘텐츠) */}
         <div />
-      </div>
+      </SectionContainer>
     </section>
   );
 }
