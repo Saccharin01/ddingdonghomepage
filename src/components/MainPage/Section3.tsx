@@ -31,7 +31,7 @@ export default function Section3() {
   return (
     <section className="w-full min-h-screen bg-white flex items-center">
       <SectionContainer className="w-full">
-        <div className="max-w-2xl">
+        <div className="mt-16 max-w-2xl">
           <h2 className="text-2xl md:text-4xl font-bold leading-tight">
             손님도 사장님도 웃는 배달,
             <br />
