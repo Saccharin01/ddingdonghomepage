@@ -4,9 +4,9 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        fhd: "1920px",   // ← 핵심
-        // "2k": "2560px",  // 선택
-        // "4k": "3840px",  // 선택
+        fhd: "1920px",
+        // "2k": "2560px",
+        // "4k": "3840px",
       },
     },
   },
