@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import SectionContainer from "./SectionContainer";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -12,42 +13,26 @@ export default function Header() {
   useEffect(() => {
     const updateHeight = () => {
       if (!ref.current) return;
-
       const height = ref.current.offsetHeight;
-      document.documentElement.style.setProperty(
-        "--header-height",
-        `${height}px`
-      );
+      document.documentElement.style.setProperty("--header-height", `${height}px`);
     };
 
     updateHeight();
     window.addEventListener("resize", updateHeight);
-
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-    };
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > MOBILE_BREAKPOINT) {
-        setIsOpen(false);
-      }
+      if (window.innerWidth > MOBILE_BREAKPOINT) setIsOpen(false);
     };
-
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    return () => { document.body.style.overflow = "auto"; };
   }, [isOpen]);
 
   const closeMenu = () => setIsOpen(false);
@@ -59,12 +44,12 @@ export default function Header() {
         ref={ref}
         className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur"
       >
-        <div className="max-w-7xl fhd:max-w-[1600px] mx-auto px-6 md:px-20 fhd:px-32 py-3 flex items-center justify-between">
+        <SectionContainer className="py-3 flex items-center justify-between">
           {/* 로고 */}
           <Link href="/" className="shrink-0" onClick={closeMenu}>
             <img
               src="/00.companyLogo.svg"
-              alt="딩동 로고"
+              alt="띵동 로고"
               className="h-10 w-auto md:h-12"
             />
           </Link>
@@ -95,35 +80,19 @@ export default function Header() {
             aria-expanded={isOpen}
           >
             <span className="sr-only">{isOpen ? "메뉴 닫기" : "메뉴 열기"}</span>
-
-            {/* 햄버거/X 전환 아이콘 */}
             <span className="relative block h-5 w-5">
-              <span
-                className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${
-                  isOpen ? "rotate-45" : "-translate-y-2"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${
-                  isOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${
-                  isOpen ? "-rotate-45" : "translate-y-2"
-                }`}
-              />
+              <span className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${isOpen ? "rotate-45" : "-translate-y-2"}`} />
+              <span className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${isOpen ? "opacity-0" : "opacity-100"}`} />
+              <span className={`absolute left-0 top-1/2 h-0.5 w-5 bg-current transition-all duration-300 ease-in-out ${isOpen ? "-rotate-45" : "translate-y-2"}`} />
             </span>
           </button>
-        </div>
+        </SectionContainer>
       </header>
 
       {/* 모바일 오버레이 */}
       <div
         className={`fixed inset-0 z-40 bg-black/40 min-[770px]:hidden transition-opacity duration-300 ${
-          isOpen
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
+          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={closeMenu}
       />

@@ -4,7 +4,7 @@ import SectionContainer from "../SectionContainer";
 
 export default function Section1() {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden flex items-center">
 
       {/* 배경 레이어 */}
       <div className="absolute inset-0 -z-10">
@@ -13,24 +13,16 @@ export default function Section1() {
           alt="bg"
           fill
           priority
+          sizes="100vw"
           className="object-cover"
         />
       </div>
 
-        {/* 컨텐츠 영역만 밀기 */}
-        <SectionContainer
-          className="
-            pt-[var(--header-height)]
-            h-full
-            grid
-            md:grid-cols-2
-            items-center
-          "
-        >
+      <SectionContainer className="grid md:grid-cols-2 items-center">
 
         {/* LEFT */}
-        <div className="max-w-md text-white fhd: mt-30">
-          <h1 className="text-4xl md:text-5xl mt-20 fhd:text-7xl font-bold leading-tight">
+        <div className="text-white">
+          <h1 className="text-4xl md:text-5xl fhd:text-7xl font-bold leading-tight">
             배달앱,
             <br />
             수수료 때문에
@@ -38,12 +30,11 @@ export default function Section1() {
             고민하셨나요?
           </h1>
 
-          <p className="mt-15 text-2xl md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
-            띵동이 해결해<br className="hidden md:block lg:hidden"/>드립니다!
+          <p className="mt-8 text-2xl md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
+            띵동이 해결해<br className="hidden md:block lg:hidden" />드립니다!
           </p>
 
-          <div className="flex gap-5 mt-10 items-center">
-
+          <div className="flex gap-5 mt-8 items-center">
             <Link href="https://apps.apple.com/kr/app/%EB%9D%B5%EB%8F%99-%EC%9A%B0%EB%A6%AC%EB%8F%99%EB%84%A4-%EA%B2%BD%EC%A0%9C-%EC%82%B4%EB%A6%AC%EB%8A%94-%EB%B0%B0%EB%8B%AC%EC%95%B1/id6504663019">
               <img
                 src="/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg"
@@ -59,12 +50,12 @@ export default function Section1() {
                 className="h-15 w-auto"
               />
             </Link>
-
           </div>
         </div>
 
-        {/* RIGHT (비워두거나 추후 콘텐츠) */}
+        {/* RIGHT */}
         <div />
+
       </SectionContainer>
     </section>
   );
