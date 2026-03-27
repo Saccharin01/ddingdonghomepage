@@ -1,6 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import SectionContainer from "../SectionContainer";
+import { fadeUpVariants, ANIM_CONFIG } from "../animations";
+
+const { stagger } = ANIM_CONFIG;
 
 export default function Section1() {
   return (
@@ -20,21 +26,39 @@ export default function Section1() {
 
       <SectionContainer className="grid md:grid-cols-2 items-center">
 
-        {/* LEFT */}
+        {/* LEFT — 마운트 시 자동 재생 (스크롤 감지 없음) */}
         <div className="text-white">
-          <h1 className="text-4xl md:text-5xl fhd:text-7xl font-bold leading-tight">
+          <motion.h1
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="text-4xl md:text-5xl fhd:text-7xl font-bold leading-tight"
+          >
             배달앱,
             <br />
             수수료 때문에
             <br />
             고민하셨나요?
-          </h1>
+          </motion.h1>
 
-          <p className="mt-8 text-2xl md:text-4xl fhd:text-6xl text-[#F43465] font-semibold">
+          <motion.p
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={stagger}
+            className="mt-8 text-2xl md:text-4xl fhd:text-6xl text-[#F43465] font-semibold"
+          >
             띵동이 해결해<br className="hidden md:block lg:hidden" />드립니다!
-          </p>
+          </motion.p>
 
-          <div className="flex gap-5 mt-8 items-center">
+          <motion.div
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={stagger * 2}
+            className="flex gap-5 mt-8 items-center"
+          >
             <Link href="https://apps.apple.com/kr/app/%EB%9D%B5%EB%8F%99-%EC%9A%B0%EB%A6%AC%EB%8F%99%EB%84%A4-%EA%B2%BD%EC%A0%9C-%EC%82%B4%EB%A6%AC%EB%8A%94-%EB%B0%B0%EB%8B%AC%EC%95%B1/id6504663019">
               <img
                 src="/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg"
@@ -50,7 +74,7 @@ export default function Section1() {
                 className="h-15 w-auto"
               />
             </Link>
-          </div>
+          </motion.div>
         </div>
 
         {/* RIGHT */}

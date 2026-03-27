@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionContainer from "../SectionContainer";
-import { fadeUpVariants, useScrollReveal } from "@/components/animations";
+import { fadeUpVariants, useScrollReveal, ANIM_CONFIG } from "../animations";
+
+const { stagger } = ANIM_CONFIG;
 
 export default function Section4() {
   const { ref, isInView } = useScrollReveal(0.25);
@@ -24,7 +26,6 @@ export default function Section4() {
 
       <SectionContainer className="grid md:grid-cols-2 items-center">
 
-        {/* LEFT — 텍스트 카드 */}
         <motion.div
           ref={ref}
           variants={fadeUpVariants}
@@ -38,7 +39,7 @@ export default function Section4() {
               variants={fadeUpVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              custom={0.1}
+              custom={stagger}
               className="pb-6 text-2xl md:text-3xl lg:text-4xl fhd:text-5xl font-bold leading-[1.15] tracking-[-0.02em] text-slate-900"
             >
               찾고, 고르고, 주문까지
@@ -50,7 +51,7 @@ export default function Section4() {
               variants={fadeUpVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              custom={0.22}
+              custom={stagger * 2}
               className="text-base fhd:text-lg font-medium leading-[1.4]"
             >
               메뉴 선택부터 결제까지 복잡한 과정을
@@ -60,7 +61,6 @@ export default function Section4() {
           </div>
         </motion.div>
 
-        {/* RIGHT */}
         <div />
 
       </SectionContainer>

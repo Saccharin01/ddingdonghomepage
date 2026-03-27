@@ -3,16 +3,18 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionContainer from "../SectionContainer";
-import { fadeUpVariants, useScrollReveal } from "@/components/animations";
+import { fadeUpVariants, useScrollReveal, ANIM_CONFIG } from "../animations";
+
+const { stagger } = ANIM_CONFIG;
+
+const textItems = [
+  "우리가 결제한 금액 중 일부는 음식이 아니라 중개 수수료로 사라집니다",
+  "그래서 손님은 더 비싼 가격을 내고 가게는 더 적은 수익을 가져갑니다",
+  "모두에게 더 좋은 방법은 없을까요?",
+];
 
 export default function Section2() {
   const { ref, isInView } = useScrollReveal(0.25);
-
-  const textItems = [
-    "우리가 결제한 금액 중 일부는 음식이 아니라 중개 수수료로 사라집니다",
-    "그래서 손님은 더 비싼 가격을 내고 가게는 더 적은 수익을 가져갑니다",
-    "모두에게 더 좋은 방법은 없을까요?",
-  ];
 
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center">
@@ -37,7 +39,6 @@ export default function Section2() {
           {/* LEFT — 텍스트 */}
           <div className="text-white break-keep space-y-6">
 
-            {/* 제목 */}
             <motion.h2
               variants={fadeUpVariants}
               initial="hidden"
@@ -50,14 +51,13 @@ export default function Section2() {
               생각해 보신 적 있나요?
             </motion.h2>
 
-            {/* 본문 — 순차 등장 */}
             {textItems.map((text, i) => (
               <motion.p
                 key={i}
                 variants={fadeUpVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                custom={0.15 * (i + 1)}
+                custom={stagger * (i + 1)}
                 className="text-lg md:text-2xl fhd:text-4xl font-bold leading-[1.4] opacity-95"
               >
                 {text}

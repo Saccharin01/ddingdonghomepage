@@ -1,21 +1,52 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import SectionContainer from "../SectionContainer";
-import { fadeUpVariants, useScrollReveal } from "@/components/animations";
+import { fadeUpVariants, useScrollReveal, ANIM_CONFIG } from "../animations";
 
-// ── 열 구성에 따른 스태거 딜레이 계산 ──────────────────────
-// index 0-based, cols: 현재 열 수
-// 2열: [0,1]이 동시(delay 0), [2]가 다음(delay 1)
-// 3열: 0→1→2 순서
-// 1열: 0→1→2 순서
-function getStaggerDelay(index: number, cols: number): number {
-  if (cols === 2) {
-    // 짝수 행의 첫 번째: 0, 0 / 두 번째 행: 1
-    return Math.floor(index / 2) * 0.15;
-  }
-  return index * 0.15;
+const { stagger } = ANIM_CONFIG;
+
+// ── 열 수 감지 훅 ──────────────────────────────────────────
+// 그리드 컨테이너 너비를 ResizeObserver로 관찰해서 현재 열 수 반환
+function useGridCols(breakpoints: { cols: number; minWidth: number }[]) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [cols, setCols] = useState(1);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      // 넓은 것부터 순서대로 체크
+      const matched = [...breakpoints]
+        .sort((a, b) => b.minWidth - a.minWidth)
+        .find((bp) => width >= bp.minWidth);
+      setCols(matched?.cols ?? 1);
+    });
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, cols };
+}
+
+// ── 열 변경 시 카드 재등장 키 ─────────────────────────────
+// cols가 바뀔 때마다 key가 바뀌어 카드가 unmount→remount → 스태거 재생
+function useColsChangeKey(cols: number) {
+  const [key, setKey] = useState(0);
+  const prevCols = useRef(cols);
+
+  useEffect(() => {
+    if (prevCols.current !== cols) {
+      prevCols.current = cols;
+      setKey((k) => k + 1);
+    }
+  }, [cols]);
+
+  return key;
 }
 
 type CardProps = {
@@ -27,19 +58,12 @@ type CardProps = {
 };
 
 function Card({ img, title, desc, index, isInView }: CardProps) {
-  // CSS columns 감지: ResizeObserver 대신 tailwind 브레이크포인트를
-  // data 속성으로 표현하고 JS에서 읽는 방법 대신,
-  // 단순화를 위해 index 기반 딜레이만 적용
-  // (1열/2열/3열 모두 index 순서 등장 — 시각적으로 자연스러움)
-  const delay = index * 0.12;
-
   return (
     <motion.div
-      layout
       variants={fadeUpVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      custom={delay}
+      custom={index * stagger}
       className="text-left"
     >
       <div className="relative w-full aspect-[4/3]">
@@ -78,9 +102,19 @@ const cards = [
   },
 ];
 
+// Tailwind 그리드 브레이크포인트와 동일하게 맞춤
+// md: 768px → 2열 / lg: 1024px → 3열
+const GRID_BREAKPOINTS = [
+  { cols: 3, minWidth: 1024 },
+  { cols: 2, minWidth: 768 },
+];
+
 export default function Section3() {
   const heading = useScrollReveal(0.2);
   const cardArea = useScrollReveal(0.15);
+
+  const { ref: gridRef, cols } = useGridCols(GRID_BREAKPOINTS);
+  const colsKey = useColsChangeKey(cols);
 
   return (
     <section className="min-h-screen w-full bg-white flex items-center">
@@ -104,7 +138,7 @@ export default function Section3() {
             variants={fadeUpVariants}
             initial="hidden"
             animate={heading.isInView ? "visible" : "hidden"}
-            custom={0.15}
+            custom={stagger}
             className="mt-4 text-gray-500 text-sm md:text-base fhd:text-lg"
           >
             불필요한 수수료 부담은 줄이고
@@ -113,21 +147,28 @@ export default function Section3() {
           </motion.p>
         </div>
 
-        {/* 카드 그리드 — layout으로 열 전환 시 부드럽게 */}
-        <motion.div
-          ref={cardArea.ref}
-          layout
+        {/* 카드 그리드
+            - gridRef: ResizeObserver가 너비 감지
+            - ref={cardArea.ref}: 스크롤 진입 감지
+            - key={colsKey}: 열 수 변경 시 카드 전체 remount → 스태거 재실행
+        */}
+        <div
+          ref={(el) => {
+            // 두 ref를 하나의 div에 동시 부착
+            (gridRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+            (cardArea.ref as React.MutableRefObject<HTMLDivElement | null>).current = el;
+          }}
           className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {cards.map((card, i) => (
             <Card
-              key={card.title}
+              key={`${colsKey}-${card.title}`}
               {...card}
               index={i}
               isInView={cardArea.isInView}
             />
           ))}
-        </motion.div>
+        </div>
 
       </SectionContainer>
     </section>
