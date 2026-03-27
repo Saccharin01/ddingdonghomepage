@@ -9,7 +9,12 @@ export default function SectionContainer({
 }: SectionContainerProps) {
   return (
     <div
-      className={`max-w-7xl fhd:max-w-[1600px] mx-auto px-6 md:px-20 fhd:px-32 ${className}`}
+      className={`
+        mx-auto w-full max-w-7xl
+        px-6 lg:px-16
+        fhd:max-w-[1600px] fhd:px-24
+        ${className}
+      `}
     >
       {children}
     </div>
